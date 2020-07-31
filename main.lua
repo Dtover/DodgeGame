@@ -8,7 +8,8 @@ local createbulletTimer = createbulletTimerMax
 local isAlive = false
 local Score = 0
 local lastscore = 0
-local Font = love.graphics.newFont("sources/font.ttf", 20)
+local font = love.graphics.newFont("sources/font.ttf", 20)
+local currentFontSize = 20
 local sound = nil
 
 local isWelcomepage = true
@@ -21,11 +22,10 @@ setupButton = { x = (love.graphics.getWidth() -200) / 2, y = love.graphics.getHe
 
 -- Set font
 local function SetFont(size)
-	if Font then
-		love.graphics.setFont(Font, size)
-	else
-		Font = love.graphics.newFont("sources/font.ttf", size)
-		love.graphics.setFont(Font)
+	if size ~= currentFontSize then
+		font = love.graphics.newFont("sources/font.ttf", size)
+		love.graphics.setFont(font)
+		currentFontSize = size
 	end
 end
 
@@ -50,7 +50,7 @@ end
 -- Button click
 local function isclick(button, mx, my)
 	if mx > button.x and mx < button.x + button.w and
-	   my > button.y and my < button.y + button.h and 
+	   my > button.y and my < button.y + button.h and
 	   button.flag then
 		return true
 	else
@@ -114,46 +114,20 @@ function love.update(dt)
 		end
 	end
 
-
 	-- Plane movement
-	if love.keyboard.isDown('right', 'd') and love.keyboard.isDown('up', 'w') then
-		if plane.x < (love.graphics.getWidth() - plane.img:getWidth()) and plane.y > 0 then
-			plane.x = plane.x + (plane.speed * dt)
-			plane.y = plane.y - (plane.speed * dt)
-		end
-	elseif love.keyboard.isDown('right', 'd') and love.keyboard.isDown('down', 's') then
-		if plane.x < (love.graphics.getWidth() - plane.img:getWidth()) and
-		   plane.y < (love.graphics.getHeight() - plane.img:getHeight()) then
-			plane.x = plane.x + (plane.speed * dt)
-			plane.y = plane.y + (plane.speed * dt)
-		end
-	elseif love.keyboard.isDown('left', 'a') and love.keyboard.isDown('up', 'w') then
-		if plane.x > 0 and plane.y > 0 then
-			plane.x = plane.x - (plane.speed * dt)
-			plane.y = plane.y - (plane.speed * dt)
-		end
-	elseif love.keyboard.isDown('left', 'a') and love.keyboard.isDown('down', 's') then
-		if plane.x > 0 and
-		   plane.y < (love.graphics.getHeight() - plane.img:getHeight()) then
-			plane.x = plane.x - (plane.speed * dt)
-			plane.y = plane.y + (plane.speed * dt)
-		end
-	elseif love.keyboard.isDown('right', 'd') then
-		if plane.x < (love.graphics.getWidth() - plane.img:getWidth()) then
-			plane.x = plane.x + (plane.speed * dt)
-		end
-	elseif love.keyboard.isDown('left', 'a') then
-		if plane.x > 0 then
-			plane.x = plane.x - (plane.speed *dt)
-		end
-	elseif love.keyboard.isDown('up', 'w') then
-		if plane.y > 0 then
-			plane.y = plane.y - (plane.speed * dt)
-		end
-	elseif love.keyboard.isDown('down', 's') then
-		if plane.y < (love.graphics.getHeight() - plane.img:getHeight()) then
-			plane.y = plane.y + (plane.speed * dt)
-		end
+	if love.keyboard.isDown('right', 'd') and
+	   plane.x < (love.graphics.getWidth() - plane.img:getWidth()) then
+		plane.x = plane.x + (plane.speed * dt)
+	end
+	if love.keyboard.isDown('left', 'a') and plane.x > 0 then
+		plane.x = plane.x - (plane.speed *dt)
+	end
+	if love.keyboard.isDown('up', 'w') and plane.y > 0 then
+		plane.y = plane.y - (plane.speed * dt)
+	end
+	if love.keyboard.isDown('down', 's') and
+	   plane.y < (love.graphics.getHeight() - plane.img:getHeight()) then
+		plane.y = plane.y + (plane.speed * dt)
 	end
 
 	-- Check if Collision
@@ -239,13 +213,13 @@ function love.draw(dt)
 			for i, bullet in pairs(bullets) do
 				love.graphics.draw(bullet.img, bullet.x, bullet.y)
 			end
-			SetFont(18)
+			SetFont(20)
 			love.graphics.print("Score: " ..tostring(Score), 680, 20)
 		else
-			SetFont(30)
+			SetFont(28)
 			love.graphics.print("Your score is: " ..tostring(lastscore),
-							love.graphics.getWidth() / 2 - 80, love.graphics.getHeight() / 2 - 50)
-			love.graphics.print("Press 'R' to restart !", love.graphics.getWidth() / 2 - 80, love.graphics.getHeight() / 2 - 20)
+							love.graphics.getWidth() / 2 - 120, love.graphics.getHeight() / 2 - 50)
+			love.graphics.print("Press 'R' to restart !", love.graphics.getWidth() / 2 - 120, love.graphics.getHeight() / 2 - 20)
 		end
 
 	end
