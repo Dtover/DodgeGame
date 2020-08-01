@@ -1,7 +1,12 @@
 local score = 0
+local file = nil
 
 function love.load()
 	score = lastscore
+	success, error = love.filesystem.append("Ranking.txt", lastscore.."\n")
+	if success == false then
+		love.event.quit()
+	end
 end
 
 function love.keypressed(key)

@@ -10,6 +10,7 @@ function SwitchScene(scene)
 	love.update = nil
 	love.draw = nil
 	love.keypressed = nil
+	love.mousepressed = nil
 	love.filesystem.load("scenes/"..scene..".lua")()
 	love.load()
 end

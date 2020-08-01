@@ -58,7 +58,14 @@ function love.mousepressed(x, y, button)
 		if isclick(startButton, x, y) then
 			SwitchScene("StartGame")
 		elseif isclick(rankButton, x, y) then
+			SwitchScene("Ranking")
 		elseif isclick(setupButton, x, y) then
 		end
+	end
+end
+
+function love.keypressed(key)
+	if key == 'escape' then
+		love.event.quit()
 	end
 end

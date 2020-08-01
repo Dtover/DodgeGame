@@ -19,9 +19,9 @@ local function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
          y2 < y1+h1
 end
 
--- Bullet change position
-local function ChangePos(x1, y1, x2, y2, x)
-	return (y2 - y1) * (x - x1) / (x2 - x1) + y1
+-- Bullet direction
+local function getAngle(x1, y1, x2, y2)
+	return math.atan2((y2 - y1), (x2 - x1))
 end
 
 function love.load()
@@ -40,41 +40,31 @@ function love.update(dt)
 		local bullety = math.random(1, love.graphics.getHeight() - bulletImg:getHeight())
 		local a = math.random(0,3)
 		if a == 0 then
-			bullet = { x = 0, y = bullety, playerx = player.x, playery = player.y, img = bulletImg, pos = true }
+			bullet = { x = 0, y = bullety, img = bulletImg,
+						angle = getAngle(0, bullety, player.x, player.y) }
 		elseif a == 1 then
-			bullet = { x = bulletx, y = 0, playerx = player.x, playery = player.y,
-						img = bulletImg, pos = player.x > bulletx }
+			bullet = { x = bulletx, y = 0, img = bulletImg,
+						angle = getAngle(bulletx, 0, player.x, player.y) }
 		elseif a == 2 then
-			bullet = { x = love.graphics.getWidth() , y = bullety, playerx = player.x, playery = player.y,
-						img = bulletImg, pos = false}
+			bullet = { x = love.graphics.getWidth(), y = bullety,
+						img = bulletImg, angle = getAngle(love.graphics.getWidth(), bullety, player.x, player.y) }
 		elseif a == 3 then
-			bullet = { x = bulletx, y = love.graphics.getHeight(), playerx = player.x, playery = player.y,
-						img = bulletImg, pos = player.x > bulletx }
+			bullet = { x = bulletx, y = love.graphics.getHeight(), img = bulletImg,
+						angle = getAngle(bulletx, love.graphics.getHeight(), player.x, player.y) }
 		end
-		if math.abs(bullet.x - bullet.playerx) > 50 then
-			table.insert(bullets, bullet)
-		end
+		table.insert(bullets, bullet)
 		Score = Score + 1
 	end
 
-	-- bullet movement
+	-- bullet movement modified version
 	for i, bullet in pairs(bullets) do
 		if bullet.x < 0 or bullet.y < 0 or
 		   bullet.x > love.graphics.getWidth() or
 		   bullet.y > love.graphics.getHeight() then
 			table.remove(bullets, i)
 		end
-		if bullet.pos then
-			bullet.y = ChangePos(bullet.x, bullet.y,
-					   bullet.playerx, bullet.playery,
-					   bullet.x + dt * 100)
-			bullet.x = bullet.x + dt * 100
-		else
-			bullet.y = ChangePos(bullet.x, bullet.y,
-					   bullet.playerx, bullet.playery,
-					   bullet.x - dt * 100)
-			bullet.x = bullet.x - dt * 100
-		end
+		bullet.y = bullet.y + math.sin(bullet.angle) * dt * 200
+		bullet.x = bullet.x + math.cos(bullet.angle) * dt * 200
 	end
 
 	-- player movement
@@ -106,18 +96,8 @@ function love.update(dt)
 
 	if not isAlive then
 		SwitchScene("GameOver")
-		--if love.keyboard.isDown('r') then
-			--bullets = {}
-			--isAlive = true
-			--player.x = 400
-			--player.y = 400
-			--Score = 0
-		--elseif love.keyboard.isDown('q') or love.keyboard.isDown('escape') then
-			--SwitchScene("Menu")
-		--end
 	end
 end
-
 
 function love.draw()
 	if isAlive then
@@ -137,14 +117,5 @@ function love.draw()
 		love.graphics.print("Score: " ..tostring(Score), 1150, 20)
 		local FPS=love.timer.getFPS()
 		love.graphics.print(FPS, 20, 680)
-	else
-		SwitchScene("GameOver")
-		--SetFont(28)
-		--love.graphics.print("Your score is: " ..tostring(lastscore),
-							--love.graphics.getWidth() / 2 - 120, love.graphics.getHeight() / 2 - 50)
-		--love.graphics.print("Press 'R' to restart !",
-							--love.graphics.getWidth() / 2 - 120, love.graphics.getHeight() / 2 - 20)
-		--love.graphics.print("Press 'Q' or 'ESC' to back to Menu !" ,
-							--love.graphics.getWidth() / 2 - 120, love.graphics.getHeight() / 2 + 10)
 	end
 end
