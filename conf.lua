@@ -5,7 +5,9 @@ function love.conf(t)
 	t.title = "EscapeGame"
 	t.version = "11.3"
 	t.author = "Dreamlocker"
-	t.window.height = "800"
-	t.window.width = "800"
+	t.window.width = "1280"
+	t.window.height = "720"
+	t.window.minwidth = "640"
+	t.window.minwidth = "360"
 	t.console = true
 end

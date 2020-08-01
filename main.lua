@@ -13,11 +13,11 @@ local currentFontSize = 20
 local sound = nil
 
 local isWelcomepage = true
-startButton = { x = (love.graphics.getWidth() - 200) / 2, y = love.graphics.getHeight() / 2 - 200,
+startButton = { x = (love.graphics.getWidth() - 200) / 2, y = love.graphics.getHeight() / 2 - 150,
 				w = 200, h = 80, text = "START GAME", flag = true }
-rankButton = { x = (love.graphics.getWidth() - 200) / 2, y = love.graphics.getHeight() / 2 - 100,
+rankButton = { x = (love.graphics.getWidth() - 200) / 2, y = love.graphics.getHeight() / 2 - 50,
 				w = 200, h = 80, text = "RANKING", flag = true}
-setupButton = { x = (love.graphics.getWidth() -200) / 2, y = love.graphics.getHeight() / 2,
+setupButton = { x = (love.graphics.getWidth() -200) / 2, y = love.graphics.getHeight() / 2 + 50,
 				w = 200, h = 80, text = "SET UP", flag = true}
 
 -- Set font
@@ -40,11 +40,6 @@ end
 -- Bullet change position
 local function ChangePos(x1, y1, x2, y2, x)
 	return (y2 - y1) * (x - x1) / (x2 - x1) + y1
-end
-
--- Judge position
-local function LeftOrRight(x, y)
-	return x > y
 end
 
 -- Button click
@@ -214,7 +209,9 @@ function love.draw(dt)
 				love.graphics.draw(bullet.img, bullet.x, bullet.y)
 			end
 			SetFont(20)
-			love.graphics.print("Score: " ..tostring(Score), 680, 20)
+			love.graphics.print("Score: " ..tostring(Score), 1150, 20)
+			local FPS=love.timer.getFPS()
+			love.graphics.print(FPS, 20, 680)
 		else
 			SetFont(28)
 			love.graphics.print("Your score is: " ..tostring(lastscore),
