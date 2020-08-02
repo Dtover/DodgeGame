@@ -1,5 +1,3 @@
-local love = require("love")
-
 gameTitle = {
 	text = "DODGE",
 	size = 120,
@@ -60,6 +58,7 @@ function love.mousepressed(x, y, button)
 		elseif isclick(rankButton, x, y) then
 			SwitchScene("Ranking")
 		elseif isclick(setupButton, x, y) then
+			SwitchScene("Setup")
 		end
 	end
 end

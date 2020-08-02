@@ -1,15 +1,14 @@
-local love = require("love")
-
 -- defalut value
-local player = { x = 400, y = 400, speed = 200, img = nil }
+local player = { x = love.graphics.getWidth() / 2, y = love.graphics.getHeight() / 2,
+				speed = 50 * setup_table.player_speed, img = nil }
 local bulletImg = nil
 local bullets = {}
-local createbulletTimerMax = 0.5
+local createbulletTimerMax = 0.5 / setup_table.bullet_density
 local createbulletTimer = createbulletTimerMax
 local isAlive = true
 local Score = 0
---local lastscore = 0
 local sound = nil
+local mouseclickvalidTimer = 0.5
 
 -- Check Collision function
 local function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
@@ -31,6 +30,10 @@ function love.load()
 end
 
 function love.update(dt)
+	-- mouse click valid
+	if mouseclickvalidTimer > 0 then
+		mouseclickvalidTimer = mouseclickvalidTimer - dt
+	end
 	-- time out bullet creation
 	createbulletTimer = createbulletTimer - (1 * dt)
 	if createbulletTimer < 0 and isAlive then
@@ -63,8 +66,8 @@ function love.update(dt)
 		   bullet.y > love.graphics.getHeight() then
 			table.remove(bullets, i)
 		end
-		bullet.y = bullet.y + math.sin(bullet.angle) * dt * 200
-		bullet.x = bullet.x + math.cos(bullet.angle) * dt * 200
+		bullet.y = bullet.y + math.sin(bullet.angle) * dt * 50 * setup_table.bullet_speed
+		bullet.x = bullet.x + math.cos(bullet.angle) * dt * 50 * setup_table.bullet_speed
 	end
 
 	-- player movement
@@ -103,7 +106,7 @@ function love.draw()
 	if isAlive then
 		love.graphics.setBackgroundColor(0, 0, 0)
 		love.graphics.setColor(55, 55, 55)
-		if love.mouse.isDown(1) then
+		if mouseclickvalidTimer < 0 and love.mouse.isDown(1) then
 			love.graphics.draw(player.img, love.mouse.getX(), love.mouse.getY())
 			player.x = love.mouse.getX()
 			player.y = love.mouse.getY()
