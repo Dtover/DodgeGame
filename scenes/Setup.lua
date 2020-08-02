@@ -55,7 +55,7 @@ function love.keypressed(key)
 		setup_table.player_speed = player_speed_value
 		setup_table.bullet_speed = bullet_speed_value
 		setup_table.bullet_density = bullet_density_value
-		writeStorage(setup_table)
+		writeStorage(setup_table, "setup.dat")
 		SwitchScene("Menu")
 	end
 end

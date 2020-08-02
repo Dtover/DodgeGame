@@ -6,6 +6,7 @@ local bullets = {}
 local createbulletTimerMax = 0.5 / setup_table.bullet_density
 local createbulletTimer = createbulletTimerMax
 local isAlive = true
+local scoretimer = 1
 local Score = 0
 local sound = nil
 local mouseclickvalidTimer = 0.5
@@ -30,6 +31,13 @@ function love.load()
 end
 
 function love.update(dt)
+
+	-- Caculate score
+	scoretimer = scoretimer - dt
+	if scoretimer < 0 then
+		scoretimer = 1
+		Score = Score + 1
+	end
 	-- mouse click valid
 	if mouseclickvalidTimer > 0 then
 		mouseclickvalidTimer = mouseclickvalidTimer - dt
@@ -56,7 +64,6 @@ function love.update(dt)
 						angle = getAngle(bulletx, love.graphics.getHeight(), player.x, player.y) }
 		end
 		table.insert(bullets, bullet)
-		Score = Score + 1
 	end
 
 	-- bullet movement modified version
