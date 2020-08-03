@@ -35,7 +35,7 @@ slider = {
 
 function draw.setFont(size)
 	if size ~= currentFontSize then
-		font = love.graphics.newFont("sources/font.ttf", size)
+		font = love.graphics.newFont("resources/fonts/font.ttf", size)
 		love.graphics.setFont(font)
 		currentFontSize = size
 	end

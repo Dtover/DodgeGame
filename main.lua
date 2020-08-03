@@ -1,6 +1,6 @@
 -- default value
 currentFontSize = 20
-font = love.graphics.newFont("sources/font.ttf", currentFontSizesize)
+font = love.graphics.newFont("resources/fonts/font.ttf", currentFontSizesize)
 setup_table = {
 	player_speed = 2,
 	bullet_speed = 2,
@@ -62,7 +62,7 @@ end
 -- Set font
 function SetFont(size)
 	if size ~= currentFontSize then
-		font = love.graphics.newFont("sources/font.ttf", size)
+		font = love.graphics.newFont("resources/fonts/font.ttf", size)
 		love.graphics.setFont(font)
 		currentFontSize = size
 	end

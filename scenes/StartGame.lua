@@ -25,9 +25,9 @@ local function getAngle(x1, y1, x2, y2)
 end
 
 function love.load()
-	player.img = love.graphics.newImage("images/bullet02.png")
-	bulletImg = love.graphics.newImage("images/bullet.png")
-	sound = love.audio.newSource("sources/gun-sound.wav", "static")
+	player.img = love.graphics.newImage("resources/images/bullet01.png")
+	bulletImg = love.graphics.newImage("resources/images/bullet02.png")
+	sound = love.audio.newSource("resources/audio/hit-sound.wav", "static")
 end
 
 function love.update(dt)
