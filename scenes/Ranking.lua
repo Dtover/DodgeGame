@@ -18,7 +18,7 @@ function love.draw()
 	end
 	for i, score in pairs(ranklist) do
 		if i > 10 then break end
-		love.graphics.print(i..".  "..score, 200, i * 40 )
+		love.graphics.print(i..".  \t"..score, 200, i * 40 )
 	end
 end
 

@@ -3,6 +3,7 @@ gameTitle = {
 	size = 120,
 	x = (love.graphics.getWidth() - 400) / 2,
 	y = love.graphics.getHeight() / 2 - 250,
+	version = "Dodge v0.1.0"
 }
 
 -- Button config
@@ -41,6 +42,8 @@ function love.draw()
 	love.graphics.setColor(1, 1, 1)
 	SetFont(gameTitle.size)
 	love.graphics.print(gameTitle.text, gameTitle.x, gameTitle.y)
+	SetFont(18)
+	love.graphics.print(gameTitle.version, 1150, 690)
 	love.graphics.rectangle( "fill", startButton.x, startButton.y, startButton.w, startButton.h )
 	love.graphics.rectangle( "fill", rankButton.x, rankButton.y, rankButton.w, rankButton.h )
 	love.graphics.rectangle( "fill", setupButton.x, setupButton.y, setupButton.w, setupButton.h )

@@ -11,60 +11,11 @@ ranklist = {}
 -- pass the score value from 'StartGame' to 'GameOver'
 lastscore = 0
 
--- write data to storage
-function writeStorage(table, filename)
-	local raw_data = ""
-	for k, v in pairs(table) do
-		raw_data = raw_data .. k .. "," .. v .. "\n"
-	end
-	love.filesystem.write(filename, raw_data)
-end
-
--- read data from storage
-function readStorage(filename)
-	local stable = {}
-	if love.filesystem.getInfo(filename) then
-		for line in love.filesystem.lines(filename) do
-			k_v = string.split(line, ",")
-			stable[k_v[1]] = k_v[2]
-		end
-	else
-		writeStorage(setup_table, filename)
-	end
-	return stable
-end
-
--- insert score into ranklist
-function insertRanklist(filename, score, date)
-	if love.filesystem.getInfo(filename) then
-		local raw = ""
-		local ranklist_temp = {}
-		for line in love.filesystem.lines(filename) do
-			table.insert(ranklist_temp, line)
-		end
-		if score then
-			table.insert(ranklist_temp, score.."s   "..date)
-		end
-		table.sort(ranklist_temp, function(a, b)
-			x = string.split(a, " ")
-			y = string.split(b, " ")
-			return tostring(x[1]) > tostring(y[1])
-		end)
-		ranklist = ranklist_temp
-		for i, score in pairs(ranklist_temp) do
-			raw = raw .. score .. "\n"
-		end
-		love.filesystem.write(filename, raw)
-	else
-		file = love.filesystem.newFile(filename)
-		file:open('w')
-		if score then
-			file:write(score.."s "..date)
-		end
-		file:close()
-	end
-end
-
+require("accessfile")
+writeStorage = accessfile.writeStorage
+readStorage = accessfile.readStorage
+insertRanklist = accessfile.insertRanklist
+insertRanklist_encrypted = accessfile.insertRanklist_encrypted
 
 -- Switch Scene
 function SwitchScene(scene)
@@ -125,6 +76,7 @@ end
 
 function love.load()
 	setup_table = readStorage("setup.dat")
-	insertRanklist("ranking.dat", nil, nil)
+	--insertRanklist("ranking.dat", nil, nil)
+	insertRanklist_encrypted("ranking.dat", nil, nil)
 	SwitchScene("Menu")
 end
