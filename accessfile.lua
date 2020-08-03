@@ -70,11 +70,11 @@ function accessfile.insertRanklist_encrypted(filename, score, date)
 			return tonumber(x[1]) > tonumber(y[1])
 		end)
 		ranklist = rtable
-		rraw = ""
-		for i = 1, #rtable do
-			rraw = rraw .. rtable[i] .. ";"
+		nraw = ""
+		for i = 1, math.min(#rtable, 10) do
+			nraw = nraw .. rtable[i] .. ";"
 		end
-		love.filesystem.write(filename, love.data.encode("string", "base64", rraw))
+		love.filesysrem.write(filename, love.data.encode("string", "base64", nraw))
 	else
 		file = love.filesystem.newFile(filename)
 		file:open('w')

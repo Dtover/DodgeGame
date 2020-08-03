@@ -1,7 +1,11 @@
 local file = nil
 
 function love.load()
-	insertRanklist_encrypted("ranking.dat", lastscore,os.date('%H:%M:%S %Y/%m/%d'))
+	if #tostring(lastscore) == 1 then
+		insertRanklist_encrypted("ranking.dat", "0"..lastscore,os.date('%H:%M:%S %Y/%m/%d'))
+	else
+		insertRanklist_encrypted("ranking.dat", lastscore,os.date('%H:%M:%S %Y/%m/%d'))
+	end
 	restartButton = {
 		x = 340,
 		y = 500,

@@ -1,5 +1,3 @@
-
---player_speed_value = generateSlider(320, 200, 250, 4, 3, player_speed_min, player_speed_max, player_speed_value)
 player_speed_slider = {
 	text = "Player Speed",
 	text_size = 25,
