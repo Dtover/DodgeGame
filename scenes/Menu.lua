@@ -1,9 +1,18 @@
 gameTitle = {
-	text = "DODGE",
-	size = 120,
 	x = (love.graphics.getWidth() - 400) / 2,
 	y = love.graphics.getHeight() / 2 - 250,
+	text = "DODGE",
+	size = 120,
+	color = {1, 1, 1},
 	version = "Dodge v0.1.0"
+}
+
+gameversion = {
+	x = 20,
+	y = love.graphics.getHeight() - 40,
+	text = "Dodge v0.1.0",
+	size = 18,
+	color = {1, 1, 1}
 }
 
 -- Button config
@@ -13,6 +22,9 @@ startButton = {
 	w = 200,
 	h = 80,
 	text = "START GAME",
+	text_size = 25,
+	button_color = {1, 1, 1},
+	text_color = {0, 0, 0}
 }
 rankButton = {
 	x = (love.graphics.getWidth() - 200) / 2,
@@ -20,6 +32,9 @@ rankButton = {
 	w = 200,
 	h = 80,
 	text = "RANKING",
+	text_size = 25,
+	button_color = {1, 1, 1},
+	text_color = {0, 0, 0}
 }
 setupButton = {
 	x = (love.graphics.getWidth() - 200) / 2,
@@ -27,6 +42,9 @@ setupButton = {
 	w = 200,
 	h = 80,
 	text = "SET UP",
+	text_size = 25,
+	button_color = {1, 1, 1},
+	text_color = {0, 0, 0}
 }
 
 function love.load()
@@ -36,19 +54,11 @@ function love.update()
 end
 
 function love.draw()
-	love.graphics.setColor(1, 1, 1)
-	SetFont(gameTitle.size)
-	love.graphics.print(gameTitle.text, gameTitle.x, gameTitle.y)
-	SetFont(18)
-	love.graphics.print(gameTitle.version, 1150, 690)
-	love.graphics.rectangle( "fill", startButton.x, startButton.y, startButton.w, startButton.h )
-	love.graphics.rectangle( "fill", rankButton.x, rankButton.y, rankButton.w, rankButton.h )
-	love.graphics.rectangle( "fill", setupButton.x, setupButton.y, setupButton.w, setupButton.h )
-	love.graphics.setColor(0, 0, 0)
-	SetFont(25)
-	love.graphics.print(startButton.text, startButton.x + 25, startButton.y + 20)
-	love.graphics.print(rankButton.text, rankButton.x + 45, rankButton.y + 20)
-	love.graphics.print(setupButton.text, setupButton.x + 60, setupButton.y + 20)
+	drawTitle("center", gameTitle)
+	drawButton(startButton)
+	drawButton(rankButton)
+	drawButton(setupButton)
+	drawTitle("right", gameversion)
 end
 
 function love.mousepressed(x, y, button)

@@ -11,11 +11,16 @@ ranklist = {}
 -- pass the score value from 'StartGame' to 'GameOver'
 lastscore = 0
 
-require("accessfile")
+accessfile = require("accessfile")
 writeStorage = accessfile.writeStorage
 readStorage = accessfile.readStorage
 insertRanklist = accessfile.insertRanklist
 insertRanklist_encrypted = accessfile.insertRanklist_encrypted
+
+draw = require("draw")
+drawTitle = draw.drawTitle
+drawButton = draw.drawButton
+drawSlider = draw.drawSlider
 
 -- Switch Scene
 function SwitchScene(scene)
@@ -66,8 +71,7 @@ end
 -- Button click
 function isclick(button, mx, my)
 	if mx > button.x and mx < button.x + button.w and
-	   my > button.y and my < button.y + button.h and
-	   button.flag then
+	   my > button.y and my < button.y + button.h then
 		return true
 	else
 		return false
