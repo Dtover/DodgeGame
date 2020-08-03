@@ -1,13 +1,7 @@
---local score = 0
 local file = nil
 
 function love.load()
-	--score = lastscore
-	--success, error = love.filesystem.append("ranking.dat", lastscore.."\n")
 	insertRanklist_encrypted("ranking.dat", lastscore,os.date('%H:%M:%S %Y/%m/%d'))
-	if success == false then
-		love.event.quit()
-	end
 end
 
 function love.keypressed(key)

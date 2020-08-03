@@ -13,7 +13,6 @@ startButton = {
 	w = 200,
 	h = 80,
 	text = "START GAME",
-	flag = true
 }
 rankButton = {
 	x = (love.graphics.getWidth() - 200) / 2,
@@ -21,7 +20,6 @@ rankButton = {
 	w = 200,
 	h = 80,
 	text = "RANKING",
-	flag = true
 }
 setupButton = {
 	x = (love.graphics.getWidth() - 200) / 2,
@@ -29,7 +27,6 @@ setupButton = {
 	w = 200,
 	h = 80,
 	text = "SET UP",
-	flag = true
 }
 
 function love.load()
