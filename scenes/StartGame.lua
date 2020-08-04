@@ -8,8 +8,10 @@ local createbulletTimer = createbulletTimerMax
 local isAlive = true
 local scoretimer = 1
 local Score = 0
+local Score_level = setup_table.player_speed * setup_table.bullet_speed * setup_table.bullet_density / 100
 local sound = nil
 local mouseclickvalidTimer = 0.5
+local paused = false
 
 -- Check Collision function
 local function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
@@ -25,8 +27,8 @@ local function getAngle(x1, y1, x2, y2)
 end
 
 function love.load()
-	player.img = love.graphics.newImage("resources/images/bullet01.png")
-	bulletImg = love.graphics.newImage("resources/images/bullet02.png")
+	player.img = love.graphics.newImage("resources/images/bullet03.png")
+	bulletImg = love.graphics.newImage("resources/images/bullet04.png")
 	sound = love.audio.newSource("resources/audio/hit-sound.wav", "static")
 end
 
@@ -34,9 +36,9 @@ function love.update(dt)
 
 	-- Caculate score
 	scoretimer = scoretimer - dt
-	if scoretimer < 0 then
+	if scoretimer < 0 and not paused then
 		scoretimer = 1
-		Score = Score + 1
+		Score = Score + Score_level
 	end
 	-- mouse click valid
 	if mouseclickvalidTimer > 0 then
@@ -44,7 +46,7 @@ function love.update(dt)
 	end
 	-- time out bullet creation
 	createbulletTimer = createbulletTimer - (1 * dt)
-	if createbulletTimer < 0 and isAlive then
+	if createbulletTimer < 0 and isAlive and not paused then
 		createbulletTimer = createbulletTimerMax
 		-- create bullet
 		local bulletx = math.random(1, love.graphics.getWidth() - bulletImg:getWidth())
@@ -73,22 +75,24 @@ function love.update(dt)
 		   bullet.y > love.graphics.getHeight() then
 			table.remove(bullets, i)
 		end
-		bullet.y = bullet.y + math.sin(bullet.angle) * dt * 50 * setup_table.bullet_speed
-		bullet.x = bullet.x + math.cos(bullet.angle) * dt * 50 * setup_table.bullet_speed
+		if not paused then
+			bullet.y = bullet.y + math.sin(bullet.angle) * dt * 50 * setup_table.bullet_speed
+			bullet.x = bullet.x + math.cos(bullet.angle) * dt * 50 * setup_table.bullet_speed
+		end
 	end
 
 	-- player movement
-	if love.keyboard.isDown('right', 'd') and
+	if love.keyboard.isDown('right', 'd') and not paused and
 	   player.x < (love.graphics.getWidth() - player.img:getWidth()) then
 		player.x = player.x + (player.speed * dt)
 	end
-	if love.keyboard.isDown('left', 'a') and player.x > 0 then
+	if love.keyboard.isDown('left', 'a') and player.x > 0 and not paused then
 		player.x = player.x - (player.speed *dt)
 	end
-	if love.keyboard.isDown('up', 'w') and player.y > 0 then
+	if love.keyboard.isDown('up', 'w') and player.y > 0 and not paused then
 		player.y = player.y - (player.speed * dt)
 	end
-	if love.keyboard.isDown('down', 's') and
+	if love.keyboard.isDown('down', 's') and not paused and
 	   player.y < (love.graphics.getHeight() - player.img:getHeight()) then
 		player.y = player.y + (player.speed * dt)
 	end
@@ -121,11 +125,17 @@ function love.draw()
 			love.graphics.draw(player.img, player.x, player.y)
 		end
 		for i, bullet in pairs(bullets) do
-			love.graphics.draw(bullet.img, bullet.x, bullet.y)
+			love.graphics.draw(bullet.img, bullet.x, bullet.y, bullet.angle + math.pi / 2)
 		end
 		SetFont(20)
 		love.graphics.print("Score: " ..tostring(Score), 1150, 20)
 		local FPS=love.timer.getFPS()
 		love.graphics.print(FPS, 20, 680)
+	end
+end
+
+function love.keypressed(key)
+	if key == 'return' then
+		paused = not paused
 	end
 end
