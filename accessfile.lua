@@ -30,7 +30,7 @@ function accessfile.insertRanklist(filename, score, date)
 			table.insert(ranklist_temp, line)
 		end
 		if score then
-			table.insert(ranklist_temp, score.." s   "..date)
+			table.insert(ranklist_temp, score.."   "..date)
 		end
 		table.sort(ranklist_temp, function(a, b)
 			x = string.split(a, " ")
@@ -46,7 +46,7 @@ function accessfile.insertRanklist(filename, score, date)
 		file = love.filesystem.newFile(filename)
 		file:open('w')
 		if score then
-			file:write(score.." s "..date)
+			file:write(score.." "..date)
 		end
 		file:close()
 	end
@@ -62,7 +62,7 @@ function accessfile.insertRanklist_encrypted(filename, score, date)
 		r = love.data.decode("string", "base64", raw)
 		rtable = string.split(r, ";")
 		if score then
-			rtable[#rtable + 1] = score.. " s " .. date
+			rtable[#rtable + 1] = score.. " " .. date
 		end
 		table.sort(rtable, function(a, b)
 			x = string.split(a, " ")
@@ -79,7 +79,7 @@ function accessfile.insertRanklist_encrypted(filename, score, date)
 		file = love.filesystem.newFile(filename)
 		file:open('w')
 		if score then
-			raw = love.data.encode("data", "base64", score.." s "..date..";")
+			raw = love.data.encode("data", "base64", score.." "..date..";")
 			file:write(raw)
 		end
 		file:close()

@@ -54,11 +54,15 @@ function draw.drawTitle(pos, title)
 	draw.setFont(title.size)
 	love.graphics.setColor(title.color)
 	if pos == "center" then
-		love.graphics.print(title.text, (love.graphics.getWidth() - font:getWidth(title.text)) / 2, title.y)
+		love.graphics.printf(title.text, 0, title.y, 1280, "center")
+		--love.graphics.print(title.text, (love.graphics.getWidth() - font:getWidth(title.text)) / 2, title.y)
 	elseif pos == "left" then
 		love.graphics.print(title.text, title.x, title.y)
 	elseif pos == "right" then
 		love.graphics.print(title.text, love.graphics.getWidth() - title.x - font:getWidth(title.text), title.y)
+	elseif pos == "vcenter" then
+		love.graphics.print(title.text, (love.graphics.getWidth() - font:getWidth(title.text)) / 2,
+										(love.graphics.getHeight() - font:getHeight(title.text)) / 2)
 	else
 		love.graphics.print(title.text, title.x, title.y)
 	end

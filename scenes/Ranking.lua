@@ -22,20 +22,20 @@ function love.draw()
 		})
 	else
 		love.graphics.setBackgroundColor(0, 0, 0)
-		drawTitle("left",{
+		drawTitle("center",{
 			x = 50,
 			y = 50,
 			size = 40,
-			text = "Ranking List :",
+			text = "Ranking List",
 			color = {1, 1, 1}
 		})
 		love.graphics.setColor(1, 1, 1)
 		SetFont(26)
 		for i, score in pairs(ranklist) do
-			if i < 10 then
-				love.graphics.print("0"..i..".  \t"..score, 350, 50 + i * 45 )
-			elseif i == 10 then
-				love.graphics.print(i..".  \t"..score, 350, 50 + i * 45 )
+			s = string.split(score, " ")
+			if i <= 10 then
+				love.graphics.print(string.format("%02d.  %.3f    %s", i, tonumber(s[1]), s[2]..s[3]),
+									440, 120 + i * 45)
 			else
 				break
 			end

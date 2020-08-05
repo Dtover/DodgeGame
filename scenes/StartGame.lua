@@ -8,7 +8,7 @@ local createbulletTimer = createbulletTimerMax
 local isAlive = true
 local scoretimer = 1
 local Score = 0
-local Score_level = setup_table.player_speed * setup_table.bullet_speed * setup_table.bullet_density / 100
+local Score_level = setup_table.bullet_speed * setup_table.bullet_density / (setup_table.player_speed * 10)
 local sound = nil
 local mouseclickvalidTimer = 0.5
 local paused = false
@@ -113,6 +113,13 @@ function love.update(dt)
 	end
 end
 
+-- press enter to pause
+function love.keypressed(key)
+	if key == 'return' then
+		paused = not paused
+	end
+end
+
 function love.draw()
 	if isAlive then
 		love.graphics.setBackgroundColor(0, 0, 0)
@@ -132,10 +139,12 @@ function love.draw()
 		local FPS=love.timer.getFPS()
 		love.graphics.print(FPS, 20, 680)
 	end
-end
-
-function love.keypressed(key)
-	if key == 'return' then
-		paused = not paused
+	if paused then
+		drawTitle("vcenter", {
+			text = "Paused",
+			size = 40,
+			color = {1, 1, 1}
+		})
 	end
 end
+
