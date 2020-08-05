@@ -1,6 +1,12 @@
 -- defalut value
-local player = { x = love.graphics.getWidth() / 2, y = love.graphics.getHeight() / 2,
-				speed = 50 * setup_table.player_speed, img = nil }
+local lgwidth = love.graphics.getWidth()
+local lgheight = love.graphics.getHeight()
+local player = {
+	x = love.graphics.getWidth() / 2,
+	y = love.graphics.getHeight() / 2,
+	speed = 50 * setup_table.player_speed,
+	img = nil
+}
 local bulletImg = nil
 local bullets = {}
 local createbulletTimerMax = 0.5 / setup_table.bullet_density
@@ -13,22 +19,49 @@ local sound = nil
 local mouseclickvalidTimer = 0.5
 local paused = false
 
--- Check Collision function
-local function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
-  return x1 < x2+w2 and
-         x2 < x1+w1 and
-         y1 < y2+h2 and
-         y2 < y1+h1
-end
-
 -- Bullet direction
 local function getAngle(x1, y1, x2, y2)
 	return math.atan2((y2 - y1), (x2 - x1))
 end
 
+
+-- Collision Detection (circle and rotating rectangular)
+function CollisionDetection(rect, circle)
+	local closetpoint = {}
+	local r_angle = - rect.angle - math.pi / 2
+	circle.nx = math.cos(r_angle) * (circle.x) - math.sin(r_angle) * (circle.y)
+	circle.ny = math.sin(r_angle) * (circle.x) + math.cos(r_angle) * (circle.y)
+	rect.rx = math.cos(r_angle) * (rect.x) - math.sin(r_angle) * (rect.y)
+	rect.ry = math.sin(r_angle) * (rect.x) + math.cos(r_angle) * (rect.y)
+	if circle.nx < rect.rx then
+		closetpoint.x = rect.rx
+	elseif circle.nx > rect.rx + rect.w then
+		closetpoint.x = rect.rx + rect.w
+	else
+		closetpoint.x = circle.nx
+	end
+	if circle.ny < rect.ry then
+		closetpoint.y = rect.ry
+	elseif circle.ny > rect.ry + rect.h then
+		closetpoint.y = rect.ry + rect.h
+	else
+		closetpoint.y = circle.ny
+	end
+	local distance = math.sqrt(math.pow(closetpoint.x - circle.nx, 2) + math.pow(closetpoint.y - circle.ny, 2))
+	if distance < circle.radius then
+		return true
+	else
+		return false
+	end
+end
+
+
 function love.load()
 	player.img = love.graphics.newImage("resources/images/bullet03.png")
-	bulletImg = love.graphics.newImage("resources/images/bullet04.png")
+	player.cx = (player.x + player.x + player.img:getWidth()) / 2
+	player.cy = (player.y + player.y + player.img:getHeight()) / 2
+	player.radius = player.img:getWidth() / 2 - 2
+	bulletImg = love.graphics.newImage("resources/images/bullet01.png")
 	sound = love.audio.newSource("resources/audio/hit-sound.wav", "static")
 end
 
@@ -53,17 +86,41 @@ function love.update(dt)
 		local bullety = math.random(1, love.graphics.getHeight() - bulletImg:getHeight())
 		local a = math.random(0,3)
 		if a == 0 then
-			bullet = { x = 0, y = bullety, img = bulletImg,
-						angle = getAngle(0, bullety, player.x, player.y) }
+			bullet = {
+				x = 0,
+				y = bullety,
+				w = bulletImg:getWidth(),
+				h = bulletImg:getHeight(),
+				img = bulletImg,
+				angle = getAngle(0, bullety, player.x, player.y),
+			}
 		elseif a == 1 then
-			bullet = { x = bulletx, y = 0, img = bulletImg,
-						angle = getAngle(bulletx, 0, player.x, player.y) }
+			bullet = {
+				x = bulletx,
+				y = 0,
+				w = bulletImg:getWidth(),
+				h = bulletImg:getHeight(),
+				img = bulletImg,
+				angle = getAngle(bulletx, 0, player.x, player.y),
+			}
 		elseif a == 2 then
-			bullet = { x = love.graphics.getWidth(), y = bullety,
-						img = bulletImg, angle = getAngle(love.graphics.getWidth(), bullety, player.x, player.y) }
+			bullet = {
+				x = love.graphics.getWidth(),
+				y = bullety,
+				w = bulletImg:getWidth(),
+				h = bulletImg:getHeight(),
+				img = bulletImg,
+				angle = getAngle(lgwidth, bullety, player.x, player.y),
+			}
 		elseif a == 3 then
-			bullet = { x = bulletx, y = love.graphics.getHeight(), img = bulletImg,
-						angle = getAngle(bulletx, love.graphics.getHeight(), player.x, player.y) }
+			bullet = {
+				x = bulletx,
+				y = lgheight,
+				w = bulletImg:getWidth(),
+				h = bulletImg:getHeight(),
+				img = bulletImg,
+				angle = getAngle(bulletx, lgheight, player.x, player.y),
+			}
 		end
 		table.insert(bullets, bullet)
 	end
@@ -99,9 +156,9 @@ function love.update(dt)
 
 	-- Check if Collision
 	for i, bullet in pairs(bullets) do
-		if CheckCollision(player.x, player.y, player.img:getWidth(), player.img:getHeight(), bullet.x, bullet.y, bullet.img:getWidth(), bullet.img:getHeight()) and
+		if CollisionDetection(bullet, player) and
 		   isAlive then
-		    sound:play()
+			sound:play()
 			table.remove(bullets, i)
 			lastscore = Score
 			isAlive = false
