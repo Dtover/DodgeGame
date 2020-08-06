@@ -56,9 +56,4 @@ function love.draw()
 	drawTitle("center", scoreTitle)
 	drawButton(restartButton)
 	drawButton(backButton)
-	--SetFont(25)
-	--love.graphics.print("Press 'R' to restart !",
-						--love.graphics.getWidth() / 2 - 200, love.graphics.getHeight() / 2 - 10)
-	--love.graphics.print("Press 'Q' or 'ESC' to back to Menu !" ,
-						--love.graphics.getWidth() / 2 - 200, love.graphics.getHeight() / 2 + 20)
 end

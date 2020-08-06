@@ -46,7 +46,7 @@ function love.update(dt)
 end
 
 function love.draw()
-	--love.graphics.setColor(255, 255, 255)
+	love.graphics.setBackgroundColor(0, 0, 0)
 	player_speed_value = drawSlider(player_speed_slider)
 	bullet_speed_value = drawSlider(bullet_speed_slider)
 	bullet_density_value = drawSlider(bullet_density_slider)

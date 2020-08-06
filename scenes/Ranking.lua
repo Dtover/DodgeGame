@@ -1,14 +1,4 @@
---local rankinglist = ranklist
 function love.load()
-	--for score in love.filesystem.lines("ranking.dat") do
-		--table.insert(rankinglist, score)
-	--end
-	--table.sort(rankinglist, function(a, b) return tonumber(a) > tonumber(b) end)
-	--local raw = ""
-	--for i,v in pairs(rankinglist) do
-		--raw = raw .. v .. "\n"
-	--end
-	--love.filesystem.write("ranking.dat", raw)
 end
 
 function love.draw()

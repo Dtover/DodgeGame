@@ -1,4 +1,6 @@
-local draw = {}
+draw = {}
+local lgheight = love.graphics.getHeight()
+local lgwidth = love.graphics.getWidth()
 --[[
 -- button format
 button = {
@@ -32,39 +34,38 @@ slider = {
 	cur_value = setup_table.player_speed
 }
 --]]
-
+--Fontlist = {}
 function draw.setFont(size)
-	if size ~= currentFontSize then
-		font = love.graphics.newFont("resources/fonts/font.ttf", size)
-		love.graphics.setFont(font)
+	if currentFontSize ~= size then
+		if Fontlist[size] then
+			love.graphics.setFont(Fontlist[size].font)
+		else
+			font = love.graphics.newFont("resources/fonts/font.ttf", size)
+			love.graphics.setFont(font)
+			Fontlist[size] = {
+				font = font,
+				height = font:getHeight("H")
+			}
+		end
 		currentFontSize = size
 	end
 end
 
 function draw.drawButton(button)
-	draw.setFont(button.text_size)
+	SetFont(button.text_size)
 	love.graphics.setColor(button.button_color)
 	love.graphics.rectangle("fill", button.x, button.y, button.w, button.h)
 	love.graphics.setColor(button.text_color)
-	love.graphics.print(button.text, button.x + (button.w - font:getWidth(button.text)) / 2,
-						button.y + (button.h - font:getHeight(button.text)) / 2)
+	love.graphics.printf(button.text, button.x, button.y + (button.h - Fontlist[button.text_size].height) / 2, button.w, "center")
 end
 
 function draw.drawTitle(pos, title)
-	draw.setFont(title.size)
+	SetFont(title.size)
 	love.graphics.setColor(title.color)
-	if pos == "center" then
-		love.graphics.printf(title.text, 0, title.y, 1280, "center")
-		--love.graphics.print(title.text, (love.graphics.getWidth() - font:getWidth(title.text)) / 2, title.y)
-	elseif pos == "left" then
-		love.graphics.print(title.text, title.x, title.y)
-	elseif pos == "right" then
-		love.graphics.print(title.text, love.graphics.getWidth() - title.x - font:getWidth(title.text), title.y)
-	elseif pos == "vcenter" then
-		love.graphics.print(title.text, (love.graphics.getWidth() - font:getWidth(title.text)) / 2,
-										(love.graphics.getHeight() - font:getHeight(title.text)) / 2)
+	if pos == "vcenter" then
+		love.graphics.printf(title.text, 0, (lgheight - font:getHeight(title.text)) / 2, 1280, "center")
 	else
-		love.graphics.print(title.text, title.x, title.y)
+		love.graphics.printf(title.text, title.x or 0, title.y or 0, (1290 - title.x * 2), pos)
 	end
 end
 

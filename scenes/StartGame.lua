@@ -2,8 +2,8 @@
 local lgwidth = love.graphics.getWidth()
 local lgheight = love.graphics.getHeight()
 local player = {
-	x = love.graphics.getWidth() / 2,
-	y = love.graphics.getHeight() / 2,
+	x = lgwidth / 2,
+	y = lgheight / 2,
 	speed = 50 * setup_table.player_speed,
 	img = nil
 }
@@ -82,8 +82,8 @@ function love.update(dt)
 	if createbulletTimer < 0 and isAlive and not paused then
 		createbulletTimer = createbulletTimerMax
 		-- create bullet
-		local bulletx = math.random(1, love.graphics.getWidth() - bulletImg:getWidth())
-		local bullety = math.random(1, love.graphics.getHeight() - bulletImg:getHeight())
+		local bulletx = math.random(1, lgwidth - bulletImg:getWidth())
+		local bullety = math.random(1, lgheight - bulletImg:getHeight())
 		local a = math.random(0,3)
 		if a == 0 then
 			bullet = {
@@ -105,7 +105,7 @@ function love.update(dt)
 			}
 		elseif a == 2 then
 			bullet = {
-				x = love.graphics.getWidth(),
+				x = lgwidth,
 				y = bullety,
 				w = bulletImg:getWidth(),
 				h = bulletImg:getHeight(),
@@ -128,8 +128,8 @@ function love.update(dt)
 	-- bullet movement modified version
 	for i, bullet in pairs(bullets) do
 		if bullet.x < 0 or bullet.y < 0 or
-		   bullet.x > love.graphics.getWidth() or
-		   bullet.y > love.graphics.getHeight() then
+		   bullet.x > lgwidth or
+		   bullet.y > lgheight then
 			table.remove(bullets, i)
 		end
 		if not paused then
@@ -140,7 +140,7 @@ function love.update(dt)
 
 	-- player movement
 	if love.keyboard.isDown('right', 'd') and not paused and
-	   player.x < (love.graphics.getWidth() - player.img:getWidth()) then
+	   player.x < (lgwidth - player.img:getWidth()) then
 		player.x = player.x + (player.speed * dt)
 	end
 	if love.keyboard.isDown('left', 'a') and player.x > 0 and not paused then
@@ -150,7 +150,7 @@ function love.update(dt)
 		player.y = player.y - (player.speed * dt)
 	end
 	if love.keyboard.isDown('down', 's') and not paused and
-	   player.y < (love.graphics.getHeight() - player.img:getHeight()) then
+	   player.y < (lgheight - player.img:getHeight()) then
 		player.y = player.y + (player.speed * dt)
 	end
 

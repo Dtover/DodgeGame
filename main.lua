@@ -1,6 +1,6 @@
 -- default value
 currentFontSize = 20
-font = love.graphics.newFont("resources/fonts/font.ttf", currentFontSizesize)
+Fontlist = {}
 setup_table = {
 	player_speed = 2,
 	bullet_speed = 2,
@@ -61,11 +61,20 @@ end
 
 -- Set font
 function SetFont(size)
-	if size ~= currentFontSize then
-		font = love.graphics.newFont("resources/fonts/font.ttf", size)
-		love.graphics.setFont(font)
+	if currentFontSize ~= size then
+		if Fontlist[size] then
+			love.graphics.setFont(Fontlist[size].font)
+		else
+			font = love.graphics.newFont("resources/fonts/font.ttf", size)
+			love.graphics.setFont(font)
+			Fontlist[size] = {
+				font = font,
+				height = font:getHeight("H")
+			}
+		end
 		currentFontSize = size
 	end
+	return Fontlist[size].height
 end
 
 -- Button click
