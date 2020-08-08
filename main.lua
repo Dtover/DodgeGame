@@ -6,8 +6,10 @@ setup_table = {
 	bullet_speed = 2,
 	bullet_density = 2,
 	bullet_style = 11,
+	lang = "English"
 }
 ranklist = {}
+lang = "Chinese"
 
 -- pass the score value from 'StartGame' to 'GameOver'
 lastscore = 0
@@ -24,6 +26,7 @@ drawButton = draw.drawButton
 drawSlider = draw.drawSlider
 
 require("checkbox")
+lglist = require("languages")
 
 -- Switch Scene
 function SwitchScene(scene)
@@ -92,6 +95,7 @@ end
 
 function love.load()
 	setup_table = readStorage("setup.dat")
+	lang = setup_table.lang
 	--insertRanklist("ranking.dat", nil, nil)
 	insertRanklist_encrypted("ranking.dat", nil, nil)
 	SwitchScene("Menu")

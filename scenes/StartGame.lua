@@ -193,7 +193,7 @@ function love.draw()
 			love.graphics.draw(bullet.img, bullet.x, bullet.y, bullet.angle + math.pi / 2)
 		end
 		SetFont(20)
-		love.graphics.print("Score: " ..tostring(Score), 1150, 20)
+		love.graphics.print( lglist[lang].st_score ..tostring(Score), 1150, 20)
 		local FPS=love.timer.getFPS()
 		love.graphics.print(FPS, 20, 680)
 	end

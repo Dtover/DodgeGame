@@ -4,7 +4,8 @@ function love.load()
 	gameTitle = {
 		x = (lgwidth - 400) / 2,
 		y = lgheight / 2 - 250,
-		text = "DODGE",
+		--text = "DODGE",
+		text = lglist[lang].Title,
 		size = 120,
 		color = {1, 1, 1}
 	}
@@ -23,7 +24,8 @@ function love.load()
 		y = gameTitle.y + 200,
 		w = 200,
 		h = 80,
-		text = "START GAME",
+		--text = "START GAME",
+		text = lglist[lang].sg_button,
 		text_size = 25,
 		button_color = {1, 1, 1},
 		text_color = {0, 0, 0}
@@ -33,7 +35,8 @@ function love.load()
 		y = gameTitle.y + 300,
 		w = 200,
 		h = 80,
-		text = "RANKING",
+		--text = "RANKING",
+		text = lglist[lang].rk_button,
 		text_size = 25,
 		button_color = {1, 1, 1},
 		text_color = {0, 0, 0}
@@ -43,15 +46,12 @@ function love.load()
 		y = gameTitle.y + 400,
 		w = 200,
 		h = 80,
-		text = "SET UP",
+		--text = "SET UP",
+		text = lglist[lang].st_button,
 		text_size = 25,
 		button_color = {1, 1, 1},
 		text_color = {0, 0, 0}
 	}
-	--require("draw")
-	--drawTitle = draw.drawTitle
-	--drawButton = draw.drawButton
-	--drawSlider = draw.drawSlider
 end
 
 

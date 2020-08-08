@@ -11,7 +11,8 @@ function love.load()
 		y = 500,
 		w = 200,
 		h = 80,
-		text = "RESTART",
+		--text = "RESTART",
+		text = lglist[lang].rs_button,
 		text_size = 30,
 		button_color = {1, 1, 1},
 		text_color = {0, 0, 0}
@@ -21,7 +22,8 @@ function love.load()
 		y = 500,
 		w = 200,
 		h = 80,
-		text = "BACK",
+		--text = "BACK",
+		text = lglist[lang].bk_button,
 		text_size = 30,
 		button_color = {1, 1, 1},
 		text_color = {0, 0, 0}
@@ -29,7 +31,7 @@ function love.load()
 	scoreTitle = {
 		x = 0,
 		y = 200,
-		text = "Your score: ".. tostring(lastscore),
+		text = lglist[lang].go_title .. tostring(lastscore),
 		size = 80,
 		color = {1, 1, 1}
 	}
