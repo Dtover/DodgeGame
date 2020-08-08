@@ -157,6 +157,12 @@ end
 
 function love.mousepressed(mx, my, button)
 	if button == 1 and isclick(backButton, mx, my) then
+		setup_table.player_speed = player_speed_value
+		setup_table.bullet_speed = bullet_speed_value
+		setup_table.bullet_density = bullet_density_value
+		setup_table.bullet_style = bullet_style_value[1]..bullet_style_value[2]
+		setup_table.lang = lang
+		writeStorage(setup_table, "setup.dat")
 		SwitchScene("Menu")
 	end
 end

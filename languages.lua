@@ -21,7 +21,9 @@ languagelist = {
 		st_orange = "橙色",
 		st_blue = "蓝色",
 		st_circle = "圆形",
-		st_cone = "锥形"
+		st_cone = "锥形",
+		rk = "分数排名",
+		nrk = "还没有成绩 !"
 	},
 	English = {
 		Title = "DODGE",
@@ -45,7 +47,9 @@ languagelist = {
 		st_orange = "Orange",
 		st_blue = "Blue",
 		st_circle = "Circle",
-		st_cone = "Cone"
+		st_cone = "Cone",
+		rk = "Ranking List",
+		nrk = "NO GRADES YET !"
 	}
 }
 return languagelist

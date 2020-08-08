@@ -7,7 +7,7 @@ function love.draw()
 		drawTitle("center", {
 			y = 300,
 			size = 40,
-			text = "NO GRADES YET !",
+			text = lglist[lang].nrk,
 			color = {1, 1, 1}
 		})
 	else
@@ -16,7 +16,7 @@ function love.draw()
 			x = 50,
 			y = 50,
 			size = 40,
-			text = "Ranking List",
+			text = lglist[lang].rk,
 			color = {1, 1, 1}
 		})
 		love.graphics.setColor(1, 1, 1)
