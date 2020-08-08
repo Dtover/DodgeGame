@@ -13,7 +13,7 @@ function love.load()
 	gameversion = {
 		x = 20,
 		y = lgheight - 40,
-		text = "Dodge v0.1.1",
+		text = "Dodge v0.1.2",
 		size = 18,
 		color = {1, 1, 1}
 	}

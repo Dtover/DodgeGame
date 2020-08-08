@@ -60,8 +60,8 @@ function love.update(dt)
 	bullet_color1.text = lglist[lang].st_purple
 	bullet_color2.text = lglist[lang].st_orange
 	bullet_color3.text = lglist[lang].st_blue
-	bullet_shape1.text = lglist[lang].st_cone
-	bullet_shape2.text = lglist[lang].st_purple
+	bullet_shape1.text = lglist[lang].st_circle
+	bullet_shape2.text = lglist[lang].st_cone
 	lang_en = Checkbox:new(250, 500, lglist[lang].lg_en, lang == "English")
 	lang_zh = Checkbox:new(450, 500, lglist[lang].lg_zh, lang == "Chinese")
 end

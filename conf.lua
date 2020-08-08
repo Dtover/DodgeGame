@@ -1,4 +1,4 @@
-GameVersion = "Dodge v0.1.1"
+GameVersion = "Dodge v0.1.2"
 local love = require("love")
 -- Configure
 function love.conf(t)
