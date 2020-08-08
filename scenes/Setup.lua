@@ -39,6 +39,18 @@ bullet_density_slider = {
 	cur_value = setup_table.bullet_density
 }
 
+backButton= {
+	x = 880,
+	y = 500,
+	w = 200,
+	h = 80,
+	--text = "BACK",
+	text = lglist[lang].bk_button,
+	text_size = 30,
+	button_color = {1, 1, 1},
+	text_color = {0, 0, 0}
+}
+
 function love.load()
 	player_speed_value = setup_table.player_speed
 	bullet_speed_value = setup_table.bullet_speed
@@ -64,10 +76,12 @@ function love.update(dt)
 	bullet_shape2.text = lglist[lang].st_cone
 	lang_en = Checkbox:new(250, 500, lglist[lang].lg_en, lang == "English")
 	lang_zh = Checkbox:new(450, 500, lglist[lang].lg_zh, lang == "Chinese")
+	backButton.text = lglist[lang].bk_button
 end
 
 function love.draw()
 	love.graphics.setBackgroundColor(0, 0, 0)
+	love.graphics.setColor(1, 1, 1)
 	player_speed_value = drawSlider(player_speed_slider)
 	bullet_speed_value = drawSlider(bullet_speed_slider)
 	bullet_density_value = drawSlider(bullet_density_slider)
@@ -83,6 +97,7 @@ function love.draw()
 	bullet_shape2:draw()
 	lang_en:draw()
 	lang_zh:draw()
+	drawButton(backButton)
 end
 
 function love.keypressed(key)
@@ -135,5 +150,11 @@ function love.mousereleased(mx, my, button)
 			lang_zh.ischecked = false
 			lang = "English"
 		end
+	end
+end
+
+function love.mousepressed(mx, my, button)
+	if button == 1 and isclick(backButton, mx, my) then
+		SwitchScene("Menu")
 	end
 end
