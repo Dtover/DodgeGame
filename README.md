@@ -4,7 +4,7 @@ This is a simple dodge bullets game, as its name means, you just need to keep do
 
 #### Preview
 **Game Menu**
-![Game](https://github.com/Dtover/DodgeGame/blob/master/preview/Menu?raw=true)
+![Game](https://github.com/Dtover/DodgeGame/blob/master/preview/Menu.png?raw=true)
 
 **In Game**
 ![Game](https://github.com/Dtover/DodgeGame/blob/master/preview/Game.png?raw=true)
