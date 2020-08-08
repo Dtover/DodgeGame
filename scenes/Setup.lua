@@ -63,6 +63,8 @@ function love.load()
 	bullet_color3 = Checkbox:new(1100, 250, lglist[lang].st_blue, bullet_style_value[1] == "3")
 	bullet_shape1 = Checkbox:new(800, 350, lglist[lang].st_circle, bullet_style_value[2] == "1")
 	bullet_shape2 = Checkbox:new(950, 350, lglist[lang].st_cone, bullet_style_value[2] == "2")
+	lang_en = Checkbox:new(250, 500, lglist[lang].lg_en, lang == "English")
+	lang_zh = Checkbox:new(450, 500, lglist[lang].lg_zh, lang == "Chinese")
 end
 
 function love.update(dt)
@@ -74,8 +76,8 @@ function love.update(dt)
 	bullet_color3.text = lglist[lang].st_blue
 	bullet_shape1.text = lglist[lang].st_circle
 	bullet_shape2.text = lglist[lang].st_cone
-	lang_en = Checkbox:new(250, 500, lglist[lang].lg_en, lang == "English")
-	lang_zh = Checkbox:new(450, 500, lglist[lang].lg_zh, lang == "Chinese")
+	lang_en.text = lglist[lang].lg_en
+	lang_zh.text = lglist[lang].lg_zh
 	backButton.text = lglist[lang].bk_button
 end
 
