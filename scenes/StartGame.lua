@@ -57,11 +57,12 @@ end
 
 
 function love.load()
-	player.img = love.graphics.newImage("resources/images/bullet03.png")
+	player.img = love.graphics.newImage("resources/images/bullet11.png")
 	player.cx = (player.x + player.x + player.img:getWidth()) / 2
 	player.cy = (player.y + player.y + player.img:getHeight()) / 2
 	player.radius = player.img:getWidth() / 2 - 2
-	bulletImg = love.graphics.newImage("resources/images/bullet01.png")
+	bs = setup_table.bullet_style
+	bulletImg = love.graphics.newImage("resources/images/bullet"..bs..".png")
 	sound = love.audio.newSource("resources/audio/hit-sound.wav", "static")
 end
 

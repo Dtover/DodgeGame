@@ -5,22 +5,25 @@ setup_table = {
 	player_speed = 2,
 	bullet_speed = 2,
 	bullet_density = 2,
+	bullet_style = 11,
 }
 ranklist = {}
 
 -- pass the score value from 'StartGame' to 'GameOver'
 lastscore = 0
 
-accessfile = require("accessfile")
+require("accessfile")
 writeStorage = accessfile.writeStorage
 readStorage = accessfile.readStorage
 insertRanklist = accessfile.insertRanklist
 insertRanklist_encrypted = accessfile.insertRanklist_encrypted
 
-draw = require("draw")
+require("draw")
 drawTitle = draw.drawTitle
 drawButton = draw.drawButton
 drawSlider = draw.drawSlider
+
+require("checkbox")
 
 -- Switch Scene
 function SwitchScene(scene)

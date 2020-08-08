@@ -1,4 +1,4 @@
-local accessfile = {}
+accessfile = {}
 function accessfile.writeStorage(table, filename)
 	local raw_data = ""
 	for k, v in pairs(table) do
