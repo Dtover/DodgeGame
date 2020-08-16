@@ -3,7 +3,7 @@ Checkbox = {
 	y = 200,
 	w = 30,
 	text = "Type",
-	ischecked = true
+	ischecked = false
 }
 
 function Checkbox:new(x, y, text, ischecked, w)
